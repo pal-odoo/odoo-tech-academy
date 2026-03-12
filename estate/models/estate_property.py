@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from odoo import fields, models
 
 class EstateProperty(models.Model):
@@ -7,13 +9,14 @@ class EstateProperty(models.Model):
     name = fields.Char(required=True)
     description = fields.Text()
     postcode = fields.Char()
-    date_availability = fields.Datetime()
+    date_availability = fields.Datetime(copy=False, default=fields.Date.today() + timedelta(days=90))
     expected_price = fields.Float(required=True)
-    selling_price = fields.Float()
-    bedrooms = fields.Integer()
+    selling_price = fields.Float(readonly=True, copy=False)
+    bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
-    facades = fields.Integer()
+    facades = fields.Integer("Number of facades")
     garage = fields.Boolean()
     garden = fields.Boolean()
     garden_area = fields.Integer()
-    garden_orientation = fields.Selection([("north", "North"), ("south", "South"), ("east", "East"), ("west", "West")])
+    garden_orientation = fields.Selection([("north", "North"), ("south", "South"), ("east", "East"), ("west", "West")],
+        help="Orientation is meant to describe the garden.")
