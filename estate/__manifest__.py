@@ -1,6 +1,6 @@
 {
     "name": "estate",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": """
         Module to deal with estate sales.
     """,
@@ -8,7 +8,7 @@
     "license": "LGPL-3",
     "category": "Real Estate/Brokerage",
     "data": [
-        # declare view, security and data files here
+        "security/ir.model.access.csv",
     ],
     "demo": [
         # declare demo files here
