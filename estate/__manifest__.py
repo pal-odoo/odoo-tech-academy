@@ -1,6 +1,6 @@
 {
     "name": "Estate",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": """
         Module to deal with estate sales.
     """,
@@ -9,6 +9,8 @@
     "category": "Real Estate/Brokerage",
     "data": [
         "security/ir.access.csv",
+        "views/estate_property_views.xml",
+        "views/estate_menus.xml",
     ],
     "demo": [
         # declare demo files here
