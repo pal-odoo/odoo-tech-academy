@@ -1,6 +1,6 @@
 {
     "name": "Estate",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": """
         Module to deal with estate sales.
     """,
@@ -10,6 +10,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/estate_property_views.xml",
+        "views/estate_property_type_views.xml",
         "views/estate_menus.xml",
     ],
     "demo": [

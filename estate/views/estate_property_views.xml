@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <list string="Properties">
                 <field name="name" string="Title"/>
+                <field name="property_type_id"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
                 <field name="living_area" string="Living Area (sqm)"/>
@@ -29,6 +30,7 @@
                         <group>
                             <field name="postcode"/>
                             <field name="date_availability"/>
+                            <field name="property_type_id"/>
                         </group>
                         <group>
                             <field name="expected_price"/>
