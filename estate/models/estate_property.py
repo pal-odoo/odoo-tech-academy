@@ -36,6 +36,18 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one("res.partner")
     seller_id = fields.Many2one("res.users", default=lambda self: self.env.user)
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
+    total_area = fields.Float(compute="_compute_total_area")
+    best_price = fields.Float(compute="_compute_best_price")
+
+    @api.depends("garden_area", "living_area")
+    def _compute_total_area(self):
+        for prop in self:
+            prop.total_area = prop.garden_area + prop.living_area
+
+    @api.depends("offer_ids.price")
+    def _compute_best_price(self):
+        for prop in self:
+            prop.best_price = max(prop.offer_ids.mapped("price")) if prop.offer_ids else 0
 
     @api.ondelete(at_uninstall=False)
     def _unlink_if_new_cancelled(self):

@@ -30,15 +30,18 @@
                         <h1><field name="name"/></h1>
                         <field name="tag_ids" widget="many2many_tags"/>
                     </div>
-                    <group>
-                        <group>
+                    <group col="6">
+                        <group colspan="2">
                             <field name="postcode"/>
                             <field name="date_availability"/>
                             <field name="property_type_id"/>
                         </group>
-                        <group>
+                        <group colspan="2">
                             <field name="expected_price"/>
                             <field name="selling_price"/>
+                            <field name="best_price"/>
+                        </group>
+                        <group colspan="2">
                             <field name="buyer_id"/>
                             <field name="seller_id"/>
                         </group>
@@ -57,6 +60,7 @@
                                     <field name="garden"/>
                                     <field name="garden_area" string="Garden Area (sqm)"/>
                                     <field name="garden_orientation"/>
+                                    <field name="total_area" string="Total Area (sqm)"/>
                                 </group>
                             </group>
                         </page>
