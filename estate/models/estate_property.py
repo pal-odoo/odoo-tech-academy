@@ -49,6 +49,15 @@ class EstateProperty(models.Model):
         for prop in self:
             prop.best_price = max(prop.offer_ids.mapped("price")) if prop.offer_ids else 0
 
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        if self.garden:
+            self.garden_area = 10
+            self.garden_orientation = "north"
+        else:
+            self.garden_area = 0
+            self.garden_orientation = False
+
     @api.ondelete(at_uninstall=False)
     def _unlink_if_new_cancelled(self):
         if any(prop.state not in {"new", "cancelled"} for prop in self):
