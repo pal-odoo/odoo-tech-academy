@@ -62,3 +62,11 @@ class EstateProperty(models.Model):
     def _unlink_if_new_cancelled(self):
         if any(prop.state not in {"new", "cancelled"} for prop in self):
             raise UserError(_("Only new or cancelled properties can be deleted."))
+
+    def action_sell_property(self):
+        if any(prop.state == "cancelled" for prop in self):
+            raise UserError(_("You cannot sell cancelled properties."))
+        self.state = "sold"
+
+    def action_cancel_property(self):
+        self.state = "cancelled"

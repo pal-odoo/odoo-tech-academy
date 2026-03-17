@@ -34,3 +34,12 @@ class EstatePropertyOffer(models.Model):
             if vals["price"] <= min_price:
                 raise UserError(_("The price of the offer must be higher than %s", min_price))
         return super().create(vals_list)
+
+    def action_accept_offer(self):
+        self.status = "accepted"
+        for offer in self:
+            offer.property_id.selling_price = offer.price
+            offer.property_id.buyer_id = offer.partner_id
+
+    def action_decline_offer(self):
+        self.status = "refused"
