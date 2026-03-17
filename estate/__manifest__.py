@@ -1,6 +1,6 @@
 {
     "name": "Estate",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "description": """
         Module to deal with estate sales.
     """,

@@ -1,7 +1,8 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError, UserError
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class EstateProperty(models.Model):
@@ -38,6 +39,22 @@ class EstateProperty(models.Model):
     seller_id = fields.Many2one("res.users", default=lambda self: self.env.user)
     total_area = fields.Float(compute="_compute_total_area")
     best_price = fields.Float(compute="_compute_best_price")
+
+    _check_expected_price_positive = models.Constraint(
+        "CHECK(expected_price > 0)",
+        "The Property's expected price must be positive."
+    )
+    _check_selling_price_positive = models.Constraint(
+        "CHECK(selling_price >= 0)",
+        "The Property's selling price must be positive."
+    )
+
+    @api.constrains("expected_price", "selling_price")
+    def _check_prices(self):
+        for prop in self:
+            if not float_is_zero(prop.selling_price, precision_rounding=0.01) and \
+               float_compare(prop.selling_price, prop.expected_price * 0.9, precision_rounding=0.01) < 0:
+                raise ValidationError(_("The selling price cannot be lower than 90% of the expected price."))
 
     @api.depends("garden_area", "living_area")
     def _compute_total_area(self):
