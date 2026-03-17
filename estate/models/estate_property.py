@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class EstateProperty(models.Model):
@@ -35,3 +36,8 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one("res.partner")
     seller_id = fields.Many2one("res.users", default=lambda self: self.env.user)
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_new_cancelled(self):
+        if any(prop.state not in {"new", "cancelled"} for prop in self):
+            raise UserError(_("Only new or cancelled properties can be deleted."))
